@@ -1,4 +1,6 @@
-# Fullpage for vue3
+# BJFullpage for vue3
+
+basic vertical slider for vue3
 
 ## install
 
@@ -6,7 +8,56 @@
 npm i bjfullpage
 ```
 
-### use
+## use
+
+```
+<template>
+  <FullPage>
+    <template #sections>
+      <div>slide 1</div>
+      <div>slide 2</div>
+      <div>slide 3</div>
+    </template>
+  </FullPage>
+</template>
+
+<script>
+import FullPage from 'bjfullpage'
+import 'bjfullpage/dist/style.css'
+</script>
+```
+
+## Otptions
+
+### models
+
+| name    | detail                         |
+| ------- | ------------------------------ |
+| current | current slide index            |
+| total   | total slide count(init itself) |
+
+### slots
+
+| name      | detail                     |
+| --------- | -------------------------- |
+| sections  | main slot for sliders      |
+| indicator | slot for custom indicators |
+
+### events
+
+| name          | detail                                           |
+| ------------- | ------------------------------------------------ |
+| changeSection | emits when slide changes, provides current index |
+
+## exposed methods
+
+| name     | detail                          |
+| -------- | ------------------------------- |
+| nextPage | change to next page             |
+| prevPage | change to prev page             |
+| moveTo   | move to the page of given index |
+
+## example
 
 ```
 <template>
@@ -25,7 +76,8 @@ npm i bjfullpage
 
 <script setup>
 import { ref } from "vue";
-import FullPage from "./package";
+import FullPage from 'bjfullpage'
+import 'bjfullpage/dist/style.css'
 
 const current = ref(0);
 const totalPage = ref(0);
