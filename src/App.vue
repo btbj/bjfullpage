@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref } from "vue";
-// import FullPage from "./components/FullPage.vue";
+import FullPage from "./package";
 
 const current = ref(0);
 const totalPage = ref(0);

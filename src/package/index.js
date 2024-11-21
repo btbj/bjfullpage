@@ -7,4 +7,4 @@ export const install = function(Vue) {
   })
 }
 
-export default install
+export default FullPage 

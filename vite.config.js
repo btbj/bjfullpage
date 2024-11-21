@@ -18,7 +18,7 @@ export default defineConfig({
       },
     },
     lib: {
-      entry: 'src/packages/index.js',
+      entry: 'src/package/index.js',
       name: 'bjfullpage',
       fileName: (format) => `bjfullpage.${format}.js`,
     },

@@ -1,5 +1,69 @@
-# Vue 3 + Vite
+# Fullpage for vue3
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## install
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+```
+npm i bjfullpage
+```
+
+### use
+
+```
+<template>
+  <FullPage
+    class="fullpage-container"
+    v-model:current="current"
+    v-model:total="totalPage"
+  >
+    <template #sections>
+      <div class="section rrr">aa</div>
+      <div class="section bbb">bb</div>
+      <div class="section ggg">cc</div>
+    </template>
+  </FullPage>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import FullPage from "./package";
+
+const current = ref(0);
+const totalPage = ref(0);
+</script>
+
+<style>
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+</style>
+<style scoped>
+.fullpage-container {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: white;
+  font-weight: bold;
+}
+.rrr {
+  background-color: #e74c3c;
+}
+.bbb {
+  background-color: #3498db;
+}
+.ggg {
+  background-color: #2ecc71;
+}
+</style>
+
+```
