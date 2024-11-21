@@ -1,0 +1,24 @@
+{
+  "name": "bjfullpage",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist/*",
+    "bjfullpage.d.js"
+  ],
+  "main": "dist/bjfullpage.umd.js",
+  "module": "dist/bjfullpage.es.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.12"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "vite": "^5.4.10"
+  }
+}
