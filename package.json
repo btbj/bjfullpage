@@ -1,7 +1,7 @@
 {
   "name": "bjfullpage",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "fullpage component for vue3",
   "repository": "https://github.com/btbj/bjfullpage",
   "author": "btbj",
