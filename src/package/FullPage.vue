@@ -1,6 +1,17 @@
 <template>
-  <div class="fullpage-root" ref="fullpageRef" @wheel.stop="onMousewheel">
-    <div class="section-container" ref="sectionContainerRef" v-show="isShow">
+  <div
+    class="fullpage-root"
+    ref="fullpageRef"
+    @wheel.stop="onMousewheel"
+    @touchstart="onTouchstart"
+    @touchend="onTouchend"
+    @touchmove="onTouchmove"
+  >
+    <div
+      :class="['section-container', isTouchMove ? 'is-touchmoving' : '']"
+      ref="sectionContainerRef"
+      v-show="isShow"
+    >
       <slot name="sections" ref="sectionsRef"></slot>
     </div>
     <div class="indicator-wrapper">
@@ -26,6 +37,7 @@ const slots = useSlots();
 const emits = defineEmits(["changeSection"]);
 const current = defineModel("current");
 const total = defineModel("total");
+const offset = ref(0);
 const isShow = ref(false);
 const fullpageRef = ref(null);
 const sectionContainerRef = ref(null);
@@ -43,6 +55,57 @@ const initFullpage = () => {
 
   isShow.value = true;
 };
+
+// ========= 手机触摸滚动事件开始
+const touchMoveStart = ref(0);
+const toutchMoveCurrent = ref(0);
+const isTouchMove = ref(false);
+const toucheMoveTriggerArea = 0.2;
+const onTouchstart = (event) => {
+  isTouchMove.value = true;
+  let e = event.originalEvent || event;
+  touchMoveStart.value = e.touches[0].screenY;
+};
+const onTouchend = (event) => {
+  isTouchMove.value = false;
+  let e = event.originalEvent || event;
+  let distance = toutchMoveCurrent.value - touchMoveStart.value;
+  if (distance > 0 && current.value === 0) {
+    distance = 0;
+  } else if (distance < 0 && current.value === total.value - 1) {
+    distance = 0;
+  }
+  const height = fullpageRef.value.clientHeight;
+  offset.value += distance;
+  let count = Math.round(-offset.value / height);
+  let remain = -offset.value % height;
+  let movePercent = remain / height;
+  if (distance < 0 && movePercent > toucheMoveTriggerArea) {
+    count = Math.ceil(-offset.value / height);
+  } else if (distance > 0 && movePercent < 1 - toucheMoveTriggerArea) {
+    count = Math.floor(-offset.value / height);
+  }
+  if (count >= 0 && count < total.value) {
+    moveTo(count);
+  }
+};
+const onTouchmove = (event) => {
+  let e = event.originalEvent || event;
+  const height = fullpageRef.value.clientHeight;
+  // const width = fullpageRef.value.clientWidth
+  toutchMoveCurrent.value = e.touches[0].screenY;
+  let distance = toutchMoveCurrent.value - touchMoveStart.value;
+  if (distance > 0 && current.value === 0) {
+    distance = 0;
+  } else if (distance < 0 && current.value === total.value - 1) {
+    distance = 0;
+  }
+
+  sectionContainerRef.value.style = `transform: translateY(${
+    offset.value + distance
+  }px)`;
+};
+// ======= 手机触摸滚动事件结束
 const onMousewheel = (event) => {
   let e = event.originalEvent || event;
   let dY = e.deltaY;
@@ -87,8 +150,8 @@ defineExpose({
 const directionMove = (index) => {
   const height = fullpageRef.value.clientHeight;
   // const width = fullpageRef.value.clientWidth
-  const distance = -index * height + "px";
-  sectionContainerRef.value.style = `transform: translateY(${distance})`;
+  offset.value = -index * height;
+  sectionContainerRef.value.style = `transform: translateY(${offset.value}px)`;
   current.value = index;
 };
 
@@ -198,6 +261,9 @@ body,
   /* overflow: auto; */
   -webkit-overflow-scrolling: auto;
   transition: all 0.6s ease;
+}
+.fullpage-root .section-container.is-touchmoving {
+  transition: none;
 }
 .fullpage-root .indicator-wrapper {
   position: absolute;

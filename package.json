@@ -1,7 +1,7 @@
 {
   "name": "bjfullpage",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "fullpage component for vue3",
   "repository": "https://github.com/btbj/bjfullpage",
   "author": "btbj",
@@ -14,7 +14,7 @@
   "main": "dist/bjfullpage.umd.js",
   "module": "dist/bjfullpage.es.js",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
