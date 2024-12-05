@@ -49,8 +49,10 @@ const initFullpage = () => {
   const sections = slots.sections();
   total.value = sections.length;
   sections.forEach((dom) => {
-    dom.el.style.height = height + "px";
-    dom.el.style.width = width + "px";
+    if (dom.el) {
+      dom.el.style.height = height + "px";
+      dom.el.style.width = width + "px";
+    }
   });
 
   isShow.value = true;
